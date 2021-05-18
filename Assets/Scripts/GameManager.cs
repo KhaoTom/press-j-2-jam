@@ -17,4 +17,9 @@ public class GameManager : MonoBehaviour
     {
         happiness -= 1;
     }
+
+    public static void ResetGame()
+    {
+        happiness = 0;
+    }
 }

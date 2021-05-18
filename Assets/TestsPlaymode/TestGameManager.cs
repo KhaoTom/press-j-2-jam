@@ -25,4 +25,12 @@ public class TestGameManager
         var end_happiness = GameManager.Happiness;
         Assert.Less(end_happiness, start_happiness);
     }
+
+    [Test]
+    public void TestResetGame()
+    {
+        GameManager.IncreaseHappiness();
+        GameManager.ResetGame();
+        Assert.Zero(GameManager.Happiness);
+    }
 }
