@@ -11,6 +11,7 @@ public class TestGameManager
     [SetUp]
     public void Setup()
     {
+        PlayerPrefs.DeleteAll();
         var go = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
         gm = go.GetComponent<GameManager>();
     }
@@ -19,6 +20,7 @@ public class TestGameManager
     public void Teardown()
     {
         Object.Destroy(gm.gameObject);
+        PlayerPrefs.DeleteAll();
     }
 
     [Test]
@@ -57,6 +59,7 @@ public class TestGameManager
         Assert.AreEqual(GameManager.States.Jamming, gm.State);
         gm.IncreaseHappiness();
         Assert.AreEqual(GameManager.States.Ascended, gm.State);
+        Assert.AreEqual("Ascended", PlayerPrefs.GetString("GameState", "default"));
     }
 
     [Test]
@@ -68,5 +71,42 @@ public class TestGameManager
         Assert.AreEqual(GameManager.States.Jamming, gm.State);
         gm.DecreaseHappiness();
         Assert.AreEqual(GameManager.States.Annihilated, gm.State);
+        Assert.AreEqual("Annihilated", PlayerPrefs.GetString("GameState", "default"));
+    }
+
+    [UnityTest]
+    public IEnumerator TestEnableDisableLoadAnnihilatedState()
+    {
+        gm.DecreaseHappiness();
+        Object.Destroy(gm);
+        gm = null;
+        yield return null;
+        var go = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+        gm = go.GetComponent<GameManager>();
+        Assert.AreEqual(GameManager.States.Annihilated, gm.State);
+    }
+
+    [UnityTest]
+    public IEnumerator TestEnableDisableLoadAscendedState()
+    {
+        gm.IncreaseHappiness();
+        Object.Destroy(gm);
+        gm = null;
+        yield return null;
+        var go = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+        gm = go.GetComponent<GameManager>();
+        Assert.AreEqual(GameManager.States.Ascended, gm.State);
+    }
+
+    [UnityTest]
+    public IEnumerator TestEnableDisableLoadBadState()
+    {
+        Object.Destroy(gm);
+        gm = null;
+        PlayerPrefs.SetString("GameState", "fooey");
+        yield return null;
+        var go = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/GameManager"));
+        gm = go.GetComponent<GameManager>();
+        Assert.AreEqual(GameManager.States.Jamming, gm.State);
     }
 }

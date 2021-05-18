@@ -45,10 +45,34 @@ public class GameManager : MonoBehaviour
         if (happiness >= AscensionThreshold)
         {
             state = States.Ascended;
+            PlayerPrefs.SetString("GameState", System.Enum.GetName(typeof(States), state));
         }
         else if (happiness <= AnnihilationThreshold)
         {
             state = States.Annihilated;
+            PlayerPrefs.SetString("GameState", System.Enum.GetName(typeof(States), state));
         }
     }
+
+    #region Unity Messages
+
+    private void OnEnable()
+    {
+        var storedState = PlayerPrefs.GetString("GameState", "Jamming");
+        try
+        {
+            state = (States)System.Enum.Parse(typeof(States), storedState);
+        }
+        catch (System.ArgumentException)
+        {
+            state = States.Jamming;
+        }
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetString("GameState", System.Enum.GetName(typeof(States), state));
+    }
+
+    #endregion
 }
