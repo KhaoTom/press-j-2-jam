@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static int happiness;
+    private int happiness;
 
-    public static int Happiness { get => happiness; }
+    public int Happiness { get => happiness; }
 
-    public static void IncreaseHappiness()
+    public void IncreaseHappiness()
     {
         happiness += 1;
     }
 
-    public static void DecreaseHappiness()
+    public void DecreaseHappiness()
     {
         happiness -= 1;
     }
 
-    public static void ResetGame()
+    public void ResetGame()
     {
         happiness = 0;
     }
