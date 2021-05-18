@@ -8,8 +8,13 @@ public class GameManager : MonoBehaviour
 
     public static int Happiness { get => happiness; }
 
-    public static void AddHappiness()
+    public static void IncreaseHappiness()
     {
+        happiness += 1;
+    }
 
+    public static void DecreaseHappiness()
+    {
+        happiness -= 1;
     }
 }
