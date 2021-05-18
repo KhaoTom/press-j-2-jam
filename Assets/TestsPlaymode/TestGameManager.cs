@@ -46,4 +46,27 @@ public class TestGameManager
         gm.ResetGame();
         Assert.Zero(gm.Happiness);
     }
+
+    [Test]
+    public void TestAscend()
+    {
+        Assert.AreEqual(GameManager.States.Jamming, gm.State);
+        gm.AscensionThreshold = 3;
+        gm.IncreaseHappiness();
+        gm.IncreaseHappiness();
+        Assert.AreEqual(GameManager.States.Jamming, gm.State);
+        gm.IncreaseHappiness();
+        Assert.AreEqual(GameManager.States.Ascended, gm.State);
+    }
+
+    [Test]
+    public void TestAnnihilate()
+    {
+        Assert.AreEqual(GameManager.States.Jamming, gm.State);
+        gm.AnnihilationThreshold = -2;
+        gm.DecreaseHappiness();
+        Assert.AreEqual(GameManager.States.Jamming, gm.State);
+        gm.DecreaseHappiness();
+        Assert.AreEqual(GameManager.States.Annihilated, gm.State);
+    }
 }
