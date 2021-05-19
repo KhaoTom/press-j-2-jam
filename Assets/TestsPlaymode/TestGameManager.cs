@@ -110,12 +110,15 @@ public class TestGameManager
         Assert.AreEqual(GameManager.States.Jamming, gm.State);
     }
 
-    [Test]
-    public void TestJamEventCallback()
+    [UnityTest]
+    public IEnumerator TestJamEventCallback()
     {
         var go = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/JamTemplate"));
         var jam = go.GetComponent<Jam>();
         gm.OnJamEvent.Invoke();
         Assert.IsTrue(jam.IsJamming);
+        yield return new WaitForSeconds(1);
+        var stateInfo = jam.Animator.GetCurrentAnimatorStateInfo(0);
+        Assert.IsTrue(stateInfo.IsName("Jam"));
     }
 }

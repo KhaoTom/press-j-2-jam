@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         happiness += 1;
         ProcessHappiness();
+        OnJamEvent.Invoke();
     }
 
     public void DecreaseHappiness()
