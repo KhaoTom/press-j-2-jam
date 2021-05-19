@@ -109,4 +109,13 @@ public class TestGameManager
         gm = go.GetComponent<GameManager>();
         Assert.AreEqual(GameManager.States.Jamming, gm.State);
     }
+
+    [Test]
+    public void TestJamEventCallback()
+    {
+        var go = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/JamTemplate"));
+        var jam = go.GetComponent<Jam>();
+        gm.OnJamEvent.Invoke();
+        Assert.IsTrue(jam.IsJamming);
+    }
 }

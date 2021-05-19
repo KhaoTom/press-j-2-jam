@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public int AscensionThreshold = 1;
     public int AnnihilationThreshold = -1;
+
+    public UnityEvent OnJamEvent;
 
     private States state = States.Jamming;
     public States State { get => state; }
